@@ -4,7 +4,7 @@ function Objects() {
         model: "Corolla",
         year: 2009
     };
-    //console.log(vehicle);
+    console.log(vehicle);
 
     const dog: { [index: string]: string } = {};
     dog.breed = "rottweiler";
