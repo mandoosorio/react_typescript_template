@@ -1,0 +1,26 @@
+{
+  "name": "typescript_template",
+  "version": "1.0.0",
+  "description": "Use .ts for pure TypeScript files.\r Use .tsx for files which contain JSX.\r For example, a React component would be .tsx, but a file containing helper functions would be .ts.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/ts-node-dev --respawn --transpile-only server.ts",
+    "develop": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandoosorio/react_typescript_template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mandoosorio/react_typescript_template/issues"
+  },
+  "homepage": "https://github.com/mandoosorio/react_typescript_template#readme",
+  "dependencies": {
+    "concurrently": "^7.3.0"
+  }
+}
