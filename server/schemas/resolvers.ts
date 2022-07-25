@@ -2,27 +2,28 @@ import { AuthenticationError } from "apollo-server-express";
 import { Category, Order, Product, User } from "../models";
 import { signToken } from '../utils/auth';
 import Stripe from 'stripe';
+import { Resolvers } from "../generated/graphql_backend";
 const stripe = new Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc', { apiVersion: "2020-08-27" });
 
-const resolvers = {
+const resolvers: Resolvers = {
     Query: {
         categories: async () => {
             return await Category.find();
         },
-        products: async (parent: any, { category, name }: { category: string, name: any }) => {
-            const params: { [index: string]: any } = {};
+        products: async (parent, args, context) => {
+            // const params: { [index: string]: any } = {};
 
-            if (category) {
-                params.category = category;
-            }
+            // if (category) {
+            //     params.category = category;
+            // }
 
-            if (name) {
-                params.name = {
-                    $regex: name
-                };
-            }
+            // if (name) {
+            //     params.name = {
+            //         $regex: name
+            //     };
+            // }
 
-            return await Product.find(params).populate('category');
+            return await Product.find().populate('category');
         },
         product: async (parent: any, { _id }: { _id: string}) => {
             return await Product.findById(_id).populate('category');
@@ -92,12 +93,12 @@ const resolvers = {
     },
 
     Mutation: {
-        addCategory: async (parent: any, args: any) => {
+        addCategory: async (parent, args, context) => {
             const category = await Category.create(args);
             return category;
         },
-        addUser: async (parent: any, args: any) => {
-            const user: any = await User.create(args);
+        addUser: async (parent: any, { userInput }: { userInput: any }) => {
+            const user: any = await User.create(userInput);
             const token = signToken(user);
 
             return { token, user };

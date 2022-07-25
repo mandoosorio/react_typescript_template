@@ -10,16 +10,26 @@ function Signup(props: any) {
 
   const handleFormSubmit = async (event: any) => {
     event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
+    console.log(formState);
+    try {
+      var data: any = {
         email: formState.email,
         password: formState.password,
         firstName: formState.firstName,
         lastName: formState.lastName,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
+      }
+      console.log(data);
+      const mutationResponse = await addUser({
+        variables: {
+          userInput: data
+        }
+      });
+      const token = mutationResponse.data.addUser.token;
+      Auth.login(token);
+    } catch {
+      //return error;
+      alert("failed");
+    }
   };
 
   const handleChange = (event: any) => {
